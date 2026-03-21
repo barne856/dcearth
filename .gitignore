@@ -1,0 +1,5 @@
+.clangd-fixup.h
+.clangd
+dcearth.cdi
+build/
+.cache/
