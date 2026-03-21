@@ -8,8 +8,8 @@ namespace dcearth {
 using namespace squint;
 
 struct vertex {
-    vec3 position;
-    vec3 normal;
+  vec3 position;
+  vec3 normal;
 };
 
 } // namespace dcearth

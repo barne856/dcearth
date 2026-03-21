@@ -8,20 +8,27 @@ Setup the KallistiOS toolchain and ports, then run the following commands:
 
 ```
 mkdir build
-cd build
-kos-cmake ..
-cd ..
-cmake --build ./build
+kos-cmake -B build -G Ninja
+ninja -C build
 ```
 
-To run using dcload-ip:
+To run using dcload-ip, configure with your Dreamcast's IP:
 
 ```
-cmake --build build --target run
+kos-cmake -B build -G Ninja -DDC_IP=<your-dreamcast-ip>
+ninja -C build run
 ```
 
 To build the disc image:
 
 ```
-cmake --build build --target disc
+ninja -C build disc
+```
+
+### Development
+
+To format code using clang-format:
+
+```
+ninja -C build format
 ```
