@@ -10,7 +10,7 @@ namespace dcearth {
 using namespace squint;
 using namespace squint::geometry;
 
-class orbital_camera : public entity<orbital_camera> {
+class orbital_camera : public entity {
 public:
   double latitude = 0.0;
   double longitude = 0.0;
@@ -67,44 +67,38 @@ public:
   }
 
   void on_enter() override { update_matrices(); }
-};
 
-class orbital_controls : public controls_system<orbital_camera> {
-public:
-  bool on_joystick(float jx, float jy, float j2x, float j2y,
-                   orbital_camera &cam) override {
+  void on_joystick(float jx, float jy, float, float) override {
     if (fabsf(jx) < 0.08f)
       jx = 0.0f;
     if (fabsf(jy) < 0.08f)
       jy = 0.0f;
     if (jx == 0.0f && jy == 0.0f)
-      return false;
+      return;
 
     float dt = 1.0f / 60.0f;
-    double speed = fmax(0.02, cam.altitude) * 0.8;
-    cam.longitude += jx * speed * dt / fmax(0.1, cos(cam.latitude));
-    cam.latitude -= jy * speed * dt;
+    double speed = fmax(0.02, altitude) * 0.8;
+    longitude += jx * speed * dt / fmax(0.1, cos(latitude));
+    latitude -= jy * speed * dt;
 
-    cam.latitude = fmax(-1.48, fmin(1.48, cam.latitude));
-    if (cam.longitude > M_PI)
-      cam.longitude -= 2.0 * M_PI;
-    if (cam.longitude < -M_PI)
-      cam.longitude += 2.0 * M_PI;
+    latitude = fmax(-1.48, fmin(1.48, latitude));
+    if (longitude > M_PI)
+      longitude -= 2.0 * M_PI;
+    if (longitude < -M_PI)
+      longitude += 2.0 * M_PI;
 
-    cam.update_matrices();
-    return true;
+    update_matrices();
   }
 
-  bool on_trigger(float lt, float rt, orbital_camera &cam) override {
+  void on_trigger(float lt, float rt) override {
     if (lt < 0.02f && rt < 0.02f)
-      return false;
+      return;
 
     float dt = 1.0f / 60.0f;
-    double zoom = double(lt - rt) * cam.altitude * 1.5 * dt;
-    cam.altitude = fmax(0.01, fmin(10.0, cam.altitude + zoom));
+    double zoom = double(lt - rt) * altitude * 1.5 * dt;
+    altitude = fmax(0.01, fmin(10.0, altitude + zoom));
 
-    cam.update_matrices();
-    return true;
+    update_matrices();
   }
 };
 

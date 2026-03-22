@@ -38,7 +38,7 @@ public:
   }
 
   void quit() { running_ = false; }
-  void set_scene(entity_base *s) { scene_ = s; }
+  void set_scene(entity *s) { scene_ = s; }
   void set_bg_color(float r, float g, float b) { pvr_set_bg_color(r, g, b); }
   float screen_width() const { return (float)vid_mode->width; }
   float screen_height() const { return (float)vid_mode->height; }
@@ -69,7 +69,7 @@ private:
     scene_->on_trigger(state->ltrig / 255.0f, state->rtrig / 255.0f);
   }
 
-  entity_base *scene_ = nullptr;
+  entity *scene_ = nullptr;
   bool running_ = true;
 };
 

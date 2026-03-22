@@ -2,7 +2,6 @@
 #define DCEARTH_GLOBE_ENTITY_HPP
 
 #include "camera_entity.hpp"
-#include "dcearth/entity.hpp"
 #include "dcearth/tile_cache.hpp"
 #include "dcearth/tile_loader.hpp"
 #include "dcearth/tile_material.hpp"
@@ -20,7 +19,7 @@ struct visible_tile {
   float u_off, v_off, u_scale, v_scale;
 };
 
-class globe_entity : public entity<globe_entity> {
+class globe_entity : public entity {
 public:
   tile_material mat;
   const orbital_camera *cam = nullptr;
@@ -44,7 +43,7 @@ public:
     cache_.destroy();
   }
 
-  void update(float) {
+  void on_update(float) override {
     cache_.advance_frame();
     loader_.poll_and_upload();
 
@@ -63,7 +62,7 @@ public:
               });
   }
 
-  void render(float) {
+  void on_render(float) override {
     mat4 vp = cam->projection * cam->view;
     dvec3 cam_pos = cam->eye_position();
     int last_cache_idx = -1;
