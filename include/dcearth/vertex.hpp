@@ -10,6 +10,7 @@ using namespace squint;
 struct vertex {
   vec3 position;
   vec3 normal;
+  vec2 uv;
 };
 
 } // namespace dcearth

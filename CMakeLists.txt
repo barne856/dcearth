@@ -23,7 +23,7 @@ set_target_properties(SQUINT PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${
 
 add_executable(dcearth src/main.cpp)
 target_include_directories(dcearth PRIVATE include)
-target_link_libraries(dcearth PRIVATE kosutils SQUINT::SQUINT)
+target_link_libraries(dcearth PRIVATE kosutils SQUINT::SQUINT jpeg)
 target_compile_features(dcearth PRIVATE cxx_std_23)
 
 set(DC_IP "" CACHE STRING "Dreamcast IP address for dcload-ip")
