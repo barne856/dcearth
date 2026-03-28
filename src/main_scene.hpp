@@ -6,6 +6,7 @@
 #include "dcearth/renderer.hpp"
 #include "dcearth/scene.hpp"
 #include "globe_entity.hpp"
+#include <dc/maple/keyboard.h>
 
 namespace dcearth {
 
@@ -35,6 +36,12 @@ public:
     if ((buttons & CONT_RESET_BUTTONS) == CONT_RESET_BUTTONS)
       renderer::get().quit();
     scene::on_button(buttons);
+  }
+
+  void on_keyboard(const keyboard_input_state &keyboard) override {
+    if (keyboard.changed_down(KBD_KEY_ESCAPE))
+      renderer::get().quit();
+    scene::on_keyboard(keyboard);
   }
 };
 

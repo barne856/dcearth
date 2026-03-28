@@ -38,6 +38,16 @@ public:
       e->on_trigger(lt, rt);
   }
 
+  void on_keyboard(const keyboard_input_state &keyboard) override {
+    for (auto *e : entities_)
+      e->on_keyboard(keyboard);
+  }
+
+  void on_mouse(const mouse_input_state &mouse) override {
+    for (auto *e : entities_)
+      e->on_mouse(mouse);
+  }
+
 protected:
   void add_entity(entity *e) {
     entities_.push_back(e);
